@@ -9,11 +9,11 @@ Pod::Coverage::TrustPod - allow POD to contain Pod::Coverage hints
 
 =head1 VERSION
 
-version 0.000 - exhibition version only
+version 0.001
 
 =cut
 
-our $VERSION = '0.000';
+our $VERSION = '0.001';
 
 =head1 DESCRIPTION
 

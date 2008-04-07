@@ -1,4 +1,8 @@
 Revision history for Pod-Coverage-TrustPod
 
+0.001     2008-04-07
+          fix packaging issues
+          remove "just a exhibit" warning
+
 0.000     2008-03-26
           initial release, probably problematic
