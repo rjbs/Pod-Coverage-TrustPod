@@ -1,5 +1,8 @@
 Revision history for Pod-Coverage-TrustPod
 
+0.002     2009-04-18
+          use Pod::Eventual instead of our own parser
+
 0.001     2008-04-07
           fix packaging issues
           remove "just a exhibit" warning

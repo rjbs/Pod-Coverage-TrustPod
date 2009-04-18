@@ -1,4 +1,3 @@
-
 use strict;
 use warnings;
 
@@ -9,6 +8,7 @@ author        ('Ricardo Signes <rjbs@cpan.org>');
 license       ('perl');
 all_from      ('lib/Pod/Coverage/TrustPod.pm');
 
-requires('Pod::Coverage' => 0.000); # minimum unknown
+requires('Pod::Coverage'         => 0.000); # minimum unknown
+requires('Pod::Eventual::Simple' => 0.000); # minimum unknown
 
 WriteAll();
