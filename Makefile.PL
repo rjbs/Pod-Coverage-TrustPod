@@ -11,4 +11,5 @@ all_from      ('lib/Pod/Coverage/TrustPod.pm');
 requires('Pod::Coverage'         => 0.000); # minimum unknown
 requires('Pod::Eventual::Simple' => 0.000); # minimum unknown
 
+auto_manifest;
 WriteAll();
