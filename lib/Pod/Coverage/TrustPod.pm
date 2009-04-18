@@ -3,17 +3,15 @@ use warnings;
 package Pod::Coverage::TrustPod;
 use base 'Pod::Coverage::CountParents';
 
+use Pod::Eventual::Simple;
+
 =head1 NAME
 
 Pod::Coverage::TrustPod - allow POD to contain Pod::Coverage hints
 
-=head1 VERSION
-
-version 0.001
-
 =cut
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 =head1 DESCRIPTION
 
@@ -67,33 +65,21 @@ regular expression.
 sub __get_pod_trust {
   my ($self) = @_;
 
-  open my $fh, '<', $self->{pod_from}
-    or die "couldn't open $self->{pod_from} for reading: $!";
+  my $output = Pod::Eventual::Simple->read_file($self->{pod_from});
 
-  my @pats;
-  my $in_section;
-  while (<$fh>) {
-    chomp;
+  my @hunks = grep {;
+    no warnings 'uninitialized';
+    (($_->{command} eq 'begin' and $_->{content} =~ /^Pod::Coverage\b/)
+    ...
+    ($_->{command} eq 'end' and $_->{content} =~ /^Pod::Coverage\b/))
+    and
+    $_->{type} eq 'verbatim'
+  } @$output;
 
-    if (!$in_section and /^=begin\s+Pod::Coverage\s*$/i) {
-      $in_section = 1;
-      next;
-    }
-
-    if ($in_section and /^=end\s+Pod::Coverage\s*$/i) {
-      $in_section = 0;
-      next;
-    }
-
-    if ($in_section) {
-      next unless /\S/;
-      s/^\s+//;
-      s/\s+$//;
-      push @pats, $_;
-    }
-  }
-
-  return \@pats;
+  return [
+    grep { s/^\s+//; s/\s+$//; /\S/ }
+    map  { split /\n/, $_->{content} } @hunks
+  ];
 }
 
 sub _trustme_check {
