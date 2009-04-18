@@ -7,3 +7,4 @@ cover_db
 ^Makefile.old$
 \.bak$
 \d.tar.gz$
+^Pod-Coverage-
