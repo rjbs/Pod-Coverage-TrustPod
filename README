@@ -1,5 +1,0 @@
-
-Pod-Coverage-TrustPod extends Pod::Coverage::CheckParents to allow the POD
-itself to contain extra trustme lines.  For more information consult the
-module's POD.
-
