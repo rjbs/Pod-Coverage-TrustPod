@@ -2,16 +2,9 @@ use strict;
 use warnings;
 package Pod::Coverage::TrustPod;
 use base 'Pod::Coverage::CountParents';
+# ABSTRACT: allow a module's pod to contain Pod::Coverage hints
 
 use Pod::Eventual::Simple;
-
-=head1 NAME
-
-Pod::Coverage::TrustPod - allow POD to contain Pod::Coverage hints
-
-=cut
-
-our $VERSION = '0.002';
 
 =head1 DESCRIPTION
 
@@ -69,17 +62,19 @@ sub __get_pod_trust {
 
   my @hunks = grep {;
     no warnings 'uninitialized';
-    (($_->{command} eq 'begin' and $_->{content} =~ /^Pod::Coverage\b/)
+    ((($_->{command} eq 'begin' and $_->{content} =~ /^Pod::Coverage\b/)
     ...
     ($_->{command} eq 'end' and $_->{content} =~ /^Pod::Coverage\b/))
-    and
-    $_->{type} eq 'verbatim'
+    and $_->{type} eq 'verbatim')
+    or
+    $_->{command} eq 'for' and $_->{content} =~ /^Pod::Coverage\b/
   } @$output;
 
-  return [
+  my @trusted =
     grep { s/^\s+//; s/\s+$//; /\S/ }
-    map  { split /\n/, $_->{content} } @hunks
-  ];
+    map  { split /\s/m, $_->{content} } @hunks;
+
+  return \@trusted;
 }
 
 sub _trustme_check {
@@ -89,14 +84,5 @@ sub _trustme_check {
 
   return grep { $sym =~ /$_/ } @{ $self->{trustme} }, @$from_pod;
 }
-
-=head1 COPYRIGHT AND AUTHOR
-
-This distribution was written by Ricardo Signes, E<lt>rjbs@cpan.orgE<gt>.
-
-Copyright 2008.  This is free software, released under the same terms as perl
-itself.
-
-=cut
 
 1;

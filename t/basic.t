@@ -30,4 +30,12 @@ require_ok($PC);
 
     is($obj->coverage, 1, 'total coverage in PodPrivate');
   }
+
+  {
+    my $obj = $PC->new(
+      package  => 'PodFor',
+    );
+
+    is($obj->coverage, 1, 'total coverage in PodFor');
+  }
 }
