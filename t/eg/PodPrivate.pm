@@ -11,7 +11,8 @@ PodPrivate - there are privacy instructions in POD
 =begin Pod::Coverage
 
   not_covered
-  p...s
+
+p...s
 
 =end Pod::Coverage
 
