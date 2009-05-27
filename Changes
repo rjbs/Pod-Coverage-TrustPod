@@ -1,4 +1,10 @@
-Revision history for Pod-Coverage-TrustPod
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+          work on any paragraph in region, not just indented ones
+
+0.091440  2009-05-24
+          work on =for blocks
 
 0.002     2009-04-18
           use Pod::Eventual instead of our own parser
