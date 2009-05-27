@@ -65,7 +65,7 @@ sub __get_pod_trust {
     ((($_->{command} eq 'begin' and $_->{content} =~ /^Pod::Coverage\b/)
     ...
     ($_->{command} eq 'end' and $_->{content} =~ /^Pod::Coverage\b/))
-    and $_->{type} eq 'verbatim')
+    and $_->{type} =~ m{\Averbatim|text\z})
     or
     $_->{command} eq 'for' and $_->{content} =~ /^Pod::Coverage\b/
   } @$output;
