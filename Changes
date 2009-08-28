@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
-{{$NEXT}}
+0.092400  2009-08-28
+          trust Pod-trusted content from parent packages Pod, too! big win!
+
+0.091470  2009-05-27
           work on any paragraph in region, not just indented ones
 
 0.091440  2009-05-24

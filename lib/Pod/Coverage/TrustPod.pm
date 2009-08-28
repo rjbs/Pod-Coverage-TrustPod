@@ -4,6 +4,7 @@ package Pod::Coverage::TrustPod;
 use base 'Pod::Coverage::CountParents';
 # ABSTRACT: allow a module's pod to contain Pod::Coverage hints
 
+use Pod::Find qw(pod_where);
 use Pod::Eventual::Simple;
 
 =head1 DESCRIPTION
@@ -56,9 +57,16 @@ regular expression.
 =cut
 
 sub __get_pod_trust {
-  my ($self) = @_;
+  my ($self, $package, $collect) = @_;
 
-  my $output = Pod::Eventual::Simple->read_file($self->{pod_from});
+  my @parents;
+  {
+    no strict 'refs';
+    @parents = @{"$package\::ISA"};
+  }
+
+  my $file   = pod_where( { -inc => 1 }, $package );
+  my $output = Pod::Eventual::Simple->read_file($file);
 
   my @hunks = grep {;
     no warnings 'uninitialized';
@@ -67,22 +75,29 @@ sub __get_pod_trust {
     ($_->{command} eq 'end' and $_->{content} =~ /^Pod::Coverage\b/))
     and $_->{type} =~ m{\Averbatim|text\z})
     or
-    $_->{command} eq 'for' and $_->{content} =~ /^Pod::Coverage\b/
+    $_->{command} eq 'for' and $_->{content} =~ s/^Pod::Coverage\b//
   } @$output;
 
   my @trusted =
     grep { s/^\s+//; s/\s+$//; /\S/ }
     map  { split /\s/m, $_->{content} } @hunks;
 
-  return \@trusted;
+  $collect->{$_} = 1 for @trusted;
+
+  $self->__get_pod_trust($_, $collect) for @parents;
+
+  return $collect;
 }
 
 sub _trustme_check {
   my ($self, $sym) = @_;
 
-  my $from_pod = $self->{_trust_from_pod} ||= $self->__get_pod_trust;
+  my $from_pod = $self->{_trust_from_pod} ||= $self->__get_pod_trust(
+    $self->{package},
+    {}
+  );
 
-  return grep { $sym =~ /$_/ } @{ $self->{trustme} }, @$from_pod;
+  return grep { $sym =~ /$_/ } @{ $self->{trustme} }, keys %$from_pod;
 }
 
 1;
