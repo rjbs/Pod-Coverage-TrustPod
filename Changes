@@ -1,5 +1,9 @@
 Revision history for {{$dist->name}}
 
+0.092840  2009-10-10
+          do not fail when a parent class has no POD at all in it
+          (thanks, omega!)
+
 0.092400  2009-08-28
           trust Pod-trusted content from parent packages Pod, too! big win!
 
