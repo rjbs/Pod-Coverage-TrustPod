@@ -65,7 +65,8 @@ sub __get_pod_trust {
     @parents = @{"$package\::ISA"};
   }
 
-  my $file   = pod_where( { -inc => 1 }, $package );
+  return $collect unless my $file   = pod_where( { -inc => 1 }, $package );
+
   my $output = Pod::Eventual::Simple->read_file($file);
 
   my @hunks = grep {;
