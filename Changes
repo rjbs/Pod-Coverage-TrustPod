@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.092831  2010-10-21 10:44:01 America/New_York
           repackage with a v1 META.yml file
 
 0.092830  2009-10-10
