@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.092832  2010-10-30 19:44:50 America/New_York
           remove a bogus prereq
 
 0.092831  2010-10-21 10:44:01 America/New_York
