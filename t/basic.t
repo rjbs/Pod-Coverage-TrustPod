@@ -8,7 +8,7 @@ my $PC = 'Pod::Coverage::TrustPod';
 require_ok($PC);
 
 {
-  local @INC = './t/eg';
+  use lib 't/eg';
   {
     my $obj = $PC->new(
       package  => 'NoCoverage',

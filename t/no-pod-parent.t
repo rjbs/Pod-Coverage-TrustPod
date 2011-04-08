@@ -11,7 +11,7 @@ my $PC = 'Pod::Coverage::TrustPod';
 require_ok($PC);
 
 my $ok = eval { 
-  local @INC = './t/eg';
+  use lib 't/eg';
   {
       my $obj = $PC->new( package  => 'ChildWithPod',);
       if (! defined $obj->coverage) {
