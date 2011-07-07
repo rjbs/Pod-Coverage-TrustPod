@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.100001  2011-07-06 22:08:56 America/New_York
           anchor the regex at both ends when matching symbols: /\A...\z/
 
 0.100000  2011-04-07 22:53:26 America/New_York
