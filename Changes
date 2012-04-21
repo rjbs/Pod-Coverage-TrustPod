@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.100002  2012-04-20 22:55:04 America/New_York
           add docs about using =for instead of =begin/=end
 
 0.100001  2011-07-06 22:08:56 America/New_York
