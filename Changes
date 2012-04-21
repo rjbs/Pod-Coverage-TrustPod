@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          add docs about using =for instead of =begin/=end
 
 0.100001  2011-07-06 22:08:56 America/New_York
           anchor the regex at both ends when matching symbols: /\A...\z/

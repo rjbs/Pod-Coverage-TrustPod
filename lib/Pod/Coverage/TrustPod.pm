@@ -54,6 +54,11 @@ block of POD targeted to Pod::Coverage are treated as C<trustme> patterns.
 Leading and trailing whitespace is stripped and the remainder is treated as a
 regular expression anchored at both ends.
 
+Remember, anywhere you could use C<=begin> and C<=end> as above, you could
+instead write:
+
+  =for Pod::Coverage foo
+
 =cut
 
 sub __get_pod_trust {
