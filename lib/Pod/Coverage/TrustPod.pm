@@ -103,7 +103,9 @@ sub _trustme_check {
     {}
   );
 
-  return grep { $sym =~ /\A$_\z/ } @{ $self->{trustme} }, keys %$from_pod;
+  return 1 if $self->SUPER::_trustme_check($sym);
+  return 1 if grep { $sym =~ /\A$_\z/ } keys %$from_pod;
+  return;
 }
 
 1;

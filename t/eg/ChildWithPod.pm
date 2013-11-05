@@ -17,4 +17,6 @@ Blah method
 
 sub blah {}
 
+sub zzz { 'Covered by trustme in tests' }
+
 1;

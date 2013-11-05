@@ -38,4 +38,22 @@ require_ok($PC);
 
     is($obj->coverage, 1, 'total coverage in PodFor');
   }
+
+  {
+    my $obj = $PC->new(
+      package  => 'TrustMe',
+      trustme  => [ qr/zzz/ ],
+    );
+
+    if (! defined $obj->coverage) {
+      diag "no coverage: " . $obj->why_unrated;
+      die;
+    }
+
+    ok(
+      $obj->coverage >= 0.66 && $obj->coverage <= 0.68,
+      "about one third covered in TrustMe",
+    ) or diag "actual coverage: " . $obj->coverage;
+    is_deeply([ $obj->naked ], [ qw(foo_xyz_bar) ], "1 symbol");
+  }
 }
