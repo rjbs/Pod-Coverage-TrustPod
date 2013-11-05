@@ -2,6 +2,11 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.100003  2013-11-05 18:54:26 America/New_York
+          the string *EVERYTHING* is now a pattern meaning "trust everything"
+
+          only anchor the regex from Pod; trustme regex are again non-anchored
+
 0.100002  2012-04-20 22:55:04 America/New_York
           add docs about using =for instead of =begin/=end
 
