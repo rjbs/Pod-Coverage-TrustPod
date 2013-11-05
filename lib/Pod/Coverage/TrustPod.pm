@@ -59,6 +59,13 @@ instead write:
 
   =for Pod::Coverage foo
 
+In some cases, you may wish to make the entire file trusted.  The special
+pattern C<*EVERYTHING*> may be provided to do just this.
+
+Keep in mind that Pod::Coverage::TrustPod sets up exceptions using the "trust"
+mechanism rather than the "privacy" mechanism in Pod::Coverage.  This is
+unlikely ever to matter to you, but it's true.
+
 =cut
 
 sub __get_pod_trust {
@@ -103,6 +110,7 @@ sub _trustme_check {
     {}
   );
 
+  return 1 if $from_pod->{'*EVERYTHING*'};
   return 1 if $self->SUPER::_trustme_check($sym);
   return 1 if grep { $sym =~ /\A$_\z/ } keys %$from_pod;
   return;

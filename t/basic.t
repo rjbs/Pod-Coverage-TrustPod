@@ -33,6 +33,14 @@ require_ok($PC);
 
   {
     my $obj = $PC->new(
+      package  => 'TrustStar',
+    );
+
+    is($obj->coverage, 1, 'total coverage in TrustStar');
+  }
+
+  {
+    my $obj = $PC->new(
       package  => 'PodFor',
     );
 
