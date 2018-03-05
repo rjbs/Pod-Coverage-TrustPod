@@ -91,11 +91,28 @@ sub __get_pod_trust {
     $_->{command} eq 'for' and $_->{content} =~ s/^Pod::Coverage\b//
   } @$output;
 
-  my @trusted =
-    grep { s/^\s+//; s/\s+$//; /\S/ }
-    map  { split /\s/m, $_->{content} } @hunks;
+  my @trusted;
+  for my $hunk (@hunks) {
+    my $line = $hunk->{start_line} // '?';
 
-  $collect->{$_} = 1 for @trusted;
+    my @patterns = grep { s/^\s+//; s/\s+$//; /\S/ }
+                   split /\s/m, $hunk->{content};
+
+    PATTERN: for my $pattern (@patterns) {
+      my $qr;
+
+      if ($pattern eq q{*EVERYTHING*}) {
+        $collect->{$pattern} = qr{.?};
+        next PATTERN;
+      }
+
+      my $ok = eval { $qr = qr{\A$pattern\z}; 1 };
+      Carp::croak("can't compile Pod::Coverage::TrustPod regex /$pattern/ at $file, line $line")
+        unless $ok;
+
+      $collect->{$pattern} = $qr;
+    }
+  }
 
   $self->__get_pod_trust($_, $collect) for @parents;
 
@@ -110,9 +127,9 @@ sub _trustme_check {
     {}
   );
 
-  return 1 if $from_pod->{'*EVERYTHING*'};
   return 1 if $self->SUPER::_trustme_check($sym);
-  return 1 if grep { $sym =~ /\A$_\z/ } keys %$from_pod;
+  return 1 if grep { $sym =~ $_ } values %$from_pod;
+
   return;
 }
 
