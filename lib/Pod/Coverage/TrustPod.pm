@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 package Pod::Coverage::TrustPod;
+
 use base 'Pod::Coverage::CountParents';
 # ABSTRACT: allow a module's pod to contain Pod::Coverage hints
 
