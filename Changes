@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+        - report more usefully when a regex can't be compiled
 
 0.100003  2013-11-05 18:54:26 America/New_York
           the string *EVERYTHING* is now a pattern meaning "trust everything"
