@@ -94,7 +94,7 @@ sub __get_pod_trust {
 
   my @trusted;
   for my $hunk (@hunks) {
-    my $line = $hunk->{start_line} // '?';
+    my $line = defined $hunk->{start_line} ? $hunk->{start_link} : '?';
 
     my @patterns = grep { s/^\s+//; s/\s+$//; /\S/ }
                    split /\s/m, $hunk->{content};
